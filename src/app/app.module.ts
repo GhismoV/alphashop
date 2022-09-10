@@ -8,6 +8,8 @@ import { LoginComponent } from './login/login.component';
 import { FormsModule } from '@angular/forms';
 import { ErrorComponent } from './error/error.component';
 import { ArticoliComponent } from './articoli/articoli.component';
+import { CoreModule } from './core/core.module';
+import { LogoutComponent } from './logout/logout.component';
 
 @NgModule({
   declarations: [
@@ -15,12 +17,14 @@ import { ArticoliComponent } from './articoli/articoli.component';
     WelcomeComponent,
     LoginComponent,
     ErrorComponent,
-    ArticoliComponent
+    ArticoliComponent,
+    LogoutComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    CoreModule
   ],
   providers: [],
   bootstrap: [AppComponent]
