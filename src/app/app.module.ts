@@ -9,6 +9,7 @@ import { FormsModule } from '@angular/forms';
 import { ErrorComponent } from './pages/error/error.component';
 import { ArticoliComponent } from './pages/articoli/articoli.component';
 import { CoreModule } from './core/core.module';
+import { HttpClientModule } from '@angular/common/http';
 import { LogoutComponent } from './pages/logout/logout.component';
 import { GridArticoliComponent } from './pages/grid-articoli/grid-articoli.component';
 import { ArticoliCardComponent } from './components/articoli-card/articoli-card.component';
@@ -28,7 +29,8 @@ import { ArticoliCardComponent } from './components/articoli-card/articoli-card.
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    CoreModule
+    CoreModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

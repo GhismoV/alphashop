@@ -1,2 +1,8 @@
 <app-jumbotron [Titolo]="titolo" [SottoTitolo]="sottotitolo" [Show]="false"></app-jumbotron>
 <p>Welcome {{utente}}, clicca <a routerLink="/articoli">qui</a> per i prodotti</p>
+
+<button class="btn btn-primary" (click)="getSaluti()">
+  <i class="material-icons md-edit"></i>Saluti
+</button>
+<h2>{{apiRsMsg}}</h2>
+<h2>{{apiRsErr}}</h2>
