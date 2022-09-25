@@ -1,3 +1,13 @@
+.card-product-grid .info-wrap {
+  padding: 1rem;
+}
+
+.card-product-grid a.title {
+  color: #6c757d;
+  display: block;
+  text-decoration: none;
+}
+
 .card-product-grid {
   margin-bottom: 20px;
   max-width: 330px;
@@ -31,15 +41,7 @@
   background: white;
 }
 
-.card-product-grid .info-wrap {
-  padding: 1rem;
-}
 
-.card-product-grid a.title {
-  color: #6c757d;
-  display: block;
-  text-decoration: none;
-}
 
 .price {
   font-weight: 600;

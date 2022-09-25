@@ -1,11 +1,12 @@
 export interface IArticoli {
-    codart : string
+    codArt : string
     descrizione : string
     um : string
-    pzcart : number
-    peso : number
+    codStat: boolean
+    pzCart : number
+    pesoNetto : number
     prezzo : number
-    active: boolean
-    data: Date
+    idStatoArt: string
+    dataCreazione: Date
     imageUrl: string
 }
