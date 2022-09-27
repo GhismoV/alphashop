@@ -14,7 +14,7 @@
     <header class="card-header">
       <div class="row gx-3">
 					<div class="col-lg-4 col-md-6 me-auto">
-						<input type="text" placeholder="Cerca..." class="form-control">
+						<input type="text" placeholder="Cerca..." class="form-control" [(ngModel)]="filter" (keyup.enter)="refresh()">
 					</div>
 					<div class="col-lg-2 col-6 col-md-3">
 						<select class="form-select">
@@ -102,6 +102,11 @@
             nextLabel="successivo" >
           </pagination-controls>
         </nav>
+
+        <div class="alert alert-danger" role="alert" *ngIf="this.articoliErr">
+          {{this.articoliErr}}
+        </div>
+
 
       </div>
     </div>
