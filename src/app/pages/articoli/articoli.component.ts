@@ -83,6 +83,16 @@ export class ArticoliComponent implements OnInit {
     }
   }
 
+  elimina = (codArt : string) : void => {
+    this.articoliSvc.delArticoloByCode(codArt).subscribe(
+      resp => {
+        if(resp.code === '0') {
+          this.articoli$ = this.articoli$.filter(item => item.codArt !== codArt);
+        }
+      }
+    )
+  }
+
 } // class end
 
 function toVect<T>(item: T) : T[] {

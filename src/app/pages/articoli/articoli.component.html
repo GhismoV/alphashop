@@ -77,7 +77,7 @@
               <td class="tbl-string">{{articolo.dataCreazione | date : 'EEEE  - dd / MM / yyyy'}}</td>
 
               <td class="text-end">
-                <button href="#" class="btn btn-light text-danger">Elimina</button>
+                <button (click)="elimina(articolo.codArt)" class="btn btn-light text-danger">Elimina</button>
 								<div class="dropdown">
 									<button href="#" data-bs-toggle="dropdown" class="btn btn-light">
                     <i class="material-icons md-more_horiz"></i>

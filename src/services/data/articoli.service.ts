@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { IArticoli } from 'src/app/models/Articoli';
+import { ResponseResult } from 'src/app/models/response-result';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +13,10 @@ export class ArticoliService {
   port: string = '5051';
 
   constructor(private httpClient :HttpClient) { }
+
+  delArticoloByCode = (code: string) : Observable<ResponseResult> => {
+    return this.httpClient.delete<ResponseResult>(`http://${this.host}:${this.port}/api/articoli/elimina/${code}`);
+  }
 
   getArticoloByCode = (code: string) : Observable<IArticoli> => {
     return this.httpClient.get<IArticoli>(`http://${this.host}:${this.port}/api/articoli/cerca/codice/${code}`) // tik: ALT + 0096  oppure linux ALTGR + '
