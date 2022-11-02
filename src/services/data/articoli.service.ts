@@ -1,22 +1,22 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { IArticoli } from 'src/app/models/Articoli';
+import { ICategoria } from 'src/app/models/Articoli';
+import { IIva } from 'src/app/models/Articoli';
 import { ResponseResult } from 'src/app/models/response-result';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ArticoliService {
 
-  host: string = 'localhost';
-  port: string = '5051';
+  host: string = environment.services.articoli.host
+  port: string = environment.services.articoli.port
 
-  constructor(private httpClient :HttpClient) { }
 
-  delArticoloByCode = (code: string) : Observable<ResponseResult> => {
-    return this.httpClient.delete<ResponseResult>(`http://${this.host}:${this.port}/api/articoli/elimina/${code}`);
-  }
+  constructor(private httpClient :HttpClient) {}
 
   getArticoloByCode = (code: string) : Observable<IArticoli> => {
     return this.httpClient.get<IArticoli>(`http://${this.host}:${this.port}/api/articoli/cerca/codice/${code}`) // tik: ALT + 0096  oppure linux ALTGR + '
@@ -50,7 +50,7 @@ export class ArticoliService {
   }
 
   private adjustArticolo = (item : IArticoli) : void => {
-    item.idStatoArt = this.formatIdStatoArt(item.idStatoArt);
+    item.descrStatoArt = this.formatIdStatoArt(item.idStatoArt);
   }
 
   formatIdStatoArt = (idStato :string) : string => {
@@ -59,6 +59,28 @@ export class ArticoliService {
       case '2': return 'Sospeso';
       default : return 'Eliminato';
     }
+  }
+
+  delArticoloByCode = (code: string) : Observable<ResponseResult> => {
+    return this.httpClient.delete<ResponseResult>(`http://${this.host}:${this.port}/api/articoli/elimina/${code}`);
+  }
+
+  getAliquoteIvaList = () : Observable<IIva[]> => {
+    return this.httpClient.get<IIva[]>(`http://${this.host}:${this.port}/api/iva`);
+  }
+
+  getCategorieList = () : Observable<ICategoria[]> => {
+    return this.httpClient.get<ICategoria[]>(`http://${this.host}:${this.port}/api/categoria`);
+  }
+
+  insertArticolo = (articolo: IArticoli) : Observable<ResponseResult> => {
+    const headers = new HttpHeaders({ 'content-type': 'application/json', 'accept': 'application/json' });
+    return this.httpClient.post<ResponseResult>(`http://${this.host}:${this.port}/api/articoli/inserisci`, articolo, {headers});
+  }
+
+  updateArticolo = (articolo: IArticoli) : Observable<ResponseResult> => {
+    const headers = new HttpHeaders({ 'content-type': 'application/json', 'accept': 'application/json' });
+    return this.httpClient.put<ResponseResult>(`http://${this.host}:${this.port}/api/articoli/modifica`, articolo, {headers});
   }
 
 }

@@ -3,7 +3,22 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+
+  services: {
+    articoli: {
+      host: "localhost",
+      port: "5051"
+    },
+
+    authJwt: {
+      host: "localhost",
+      port: "9100"
+    }
+
+  }
+
+
 };
 
 /*

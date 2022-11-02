@@ -3,7 +3,7 @@
   <div class="content-header">
     <h2 class="content-title">Lista Prodotti</h2>
     <div>
-      <button class="btn btn-primary">
+      <button class="btn btn-primary" (click)="nuovo()">
         <i class="material-icons md-plus"></i>
         Nuovo
       </button>
@@ -68,11 +68,11 @@
               <td class="tbl-string">{{articolo.prezzo | currency:'EUR':'symbol':'2.3-5'}}</td>
               <td class="tbl-string infoBadge">
                 <span
-                    [ngClass]="articolo.idStatoArt === 'Attivo'
+                    [ngClass]="articolo.idStatoArt === '1'
                     ? 'badge rounded-pill bg-success alert-success'
-                    : articolo.idStatoArt === 'Sospeso'
+                    : articolo.idStatoArt === '2'
                       ? 'badge rounded-pill bg-danger alert-danger'
-                      : 'badge rounded-pill bg-primary alert-booo'">{{articolo.idStatoArt}}</span>
+                      : 'badge rounded-pill bg-primary alert-booo'">{{articolo.descrStatoArt}}</span>
               </td>
               <td class="tbl-string">{{articolo.dataCreazione | date : 'EEEE  - dd / MM / yyyy'}}</td>
 
@@ -85,7 +85,7 @@
 									<ul class="dropdown-menu">
 										<li><a class="dropdown-item" href="#">Dettaglio</a></li>
 										<li><a class="dropdown-item" href="#">Info</a></li>
-										<li><a class="dropdown-item" href="#">Modifica</a></li>
+										<li><a class="dropdown-item" (click)="modifica(articolo.codArt)">Modifica</a></li>
 									</ul>
 								</div> <!-- dropdown //end -->
 							</td>

@@ -9,11 +9,14 @@ import { FormsModule } from '@angular/forms';
 import { ErrorComponent } from './pages/error/error.component';
 import { ArticoliComponent } from './pages/articoli/articoli.component';
 import { CoreModule } from './core/core.module';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LogoutComponent } from './pages/logout/logout.component';
 import { GridArticoliComponent } from './pages/grid-articoli/grid-articoli.component';
 import { ArticoliCardComponent } from './components/articoli-card/articoli-card.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { GestartComponent } from './pages/gestart/gestart.component';
+import { AuthInterceptor } from 'src/interceptors/auth.interceptor';
+import { ForbiddenComponent } from './pages/forbidden/forbidden.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +27,9 @@ import { NgxPaginationModule } from 'ngx-pagination';
     ArticoliComponent,
     LogoutComponent,
     GridArticoliComponent,
-    ArticoliCardComponent
+    ArticoliCardComponent,
+    GestartComponent,
+    ForbiddenComponent
   ],
   imports: [
     BrowserModule,
@@ -34,7 +39,9 @@ import { NgxPaginationModule } from 'ngx-pagination';
     HttpClientModule,
     NgxPaginationModule
   ],
-  providers: [],
+  providers: [
+    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

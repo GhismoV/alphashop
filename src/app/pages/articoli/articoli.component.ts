@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { map, Observable, Observer, of, OperatorFunction } from 'rxjs';
+import { ResponseResult } from 'src/app/models/response-result';
 import { ArticoliService } from 'src/services/data/articoli.service';
 import { IArticoli } from '../../models/Articoli';
 
@@ -22,10 +23,13 @@ export class ArticoliComponent implements OnInit {
 
   partObs: Partial<Observer<IArticoli[]>> = {}
 
-
   filterType : number = 0;
 
-  constructor(private articoliSvc: ArticoliService, private route: ActivatedRoute) {}
+
+  // -------------------------
+
+
+  constructor(private articoliSvc: ArticoliService, private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit(): void {
     this.filter$ = this.route.queryParamMap.pipe(
@@ -34,7 +38,8 @@ export class ArticoliComponent implements OnInit {
 
     this.partObs = {
       next: this.handleResponse.bind(this),
-      error: this.handleError.bind(this)
+      error: this.handleError.bind(this),
+      complete: () => console.log('completata elaborazione risposta del server')
     }
 
     this.filter$.subscribe(p => this.filter  = p);
@@ -43,10 +48,15 @@ export class ArticoliComponent implements OnInit {
   }
 
   refresh = () : void => {
+    this.refreshOp()
+    this.pagina = 1;
     this.filterType = 0;
-    this.articoliErr = '';
     if(this.filter)
       this.getArticoli(this.filter);
+  }
+
+  refreshOp = () : void => {
+    this.articoliErr = '';
   }
 
   getArticoli = (f : string) : void => {
@@ -84,16 +94,40 @@ export class ArticoliComponent implements OnInit {
   }
 
   elimina = (codArt : string) : void => {
-    this.articoliSvc.delArticoloByCode(codArt).subscribe(
-      resp => {
-        if(resp.code === '0') {
-          this.articoli$ = this.articoli$.filter(item => item.codArt !== codArt);
-        }
-      }
-    )
+    this.refreshOp();
+    this.articoliSvc.delArticoloByCode(codArt).subscribe({
+      next: r => this.handleDelOk(r, codArt),
+      error: this.handleDelKo.bind(this),
+      complete: () => console.log('completata elaborazione risposta del server')
+    })
   }
 
+  handleDelOk = (resp: ResponseResult, codArticolo: string) : void => {
+    console.log(resp);
+    if(resp.code === '0') {
+      this.articoli$ = this.articoli$.filter(item => item.codArt !== codArticolo);
+    }
+  }
+
+  handleDelKo = (err: any) : void => {
+    console.log(err);
+    this.articoliErr = err.error.message;
+  }
+
+  modifica = (codArt : string) : void => {
+    this.refreshOp();
+    console.log(`Modifica articolo ${codArt}`);
+    this.router.navigate(['gestart', codArt])
+  }
+
+  nuovo = () => {
+    console.log("Inserimento nuovo articolo");
+    this.router.navigate(['gestart']);
+  }
+
+
 } // class end
+
 
 function toVect<T>(item: T) : T[] {
     return [item];
