@@ -77,7 +77,14 @@
               <td class="tbl-string">{{articolo.dataCreazione | date : 'EEEE  - dd / MM / yyyy'}}</td>
 
               <td class="text-end">
-                <button (click)="elimina(articolo.codArt)" class="btn btn-light text-danger">Elimina</button>
+                <div *ngIf="this.isEliminaButtonToShow(); then blkEnableElimina else  blkDisableElimina"></div>
+                <ng-template #blkEnableElimina><button (click)="elimina(articolo.codArt)" class="btn btn-light text-danger">Elimina</button></ng-template>
+                <ng-template #blkDisableElimina><button disabled (click)="elimina(articolo.codArt)" class="btn btn-light text-danger">Elimina</button></ng-template>
+                <!--
+                <button *ngIf="!this.isEliminaButtonToShow()" disabled (click)="elimina(articolo.codArt)" class="btn btn-light text-danger">Elimina</button>
+                <button *ngIf="this.isEliminaButtonToShow()" (click)="elimina(articolo.codArt)" class="btn btn-light text-danger">Elimina</button>
+                -->
+
 								<div class="dropdown">
 									<button href="#" data-bs-toggle="dropdown" class="btn btn-light">
                     <i class="material-icons md-more_horiz"></i>
@@ -93,6 +100,8 @@
             </tr>
           </tbody>
         </table>
+
+        <app-spinner></app-spinner>
 
         <nav class="float-end mt-3" aria-label="Page navigation">
           <pagination-controls

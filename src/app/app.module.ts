@@ -17,6 +17,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { GestartComponent } from './pages/gestart/gestart.component';
 import { AuthInterceptor } from 'src/interceptors/auth.interceptor';
 import { ForbiddenComponent } from './pages/forbidden/forbidden.component';
+import { GestErrorInterceptor } from 'src/interceptors/gest-error.interceptor';
+import { NetworkInterceptor } from 'src/interceptors/network.interceptor';
 
 @NgModule({
   declarations: [
@@ -40,7 +42,9 @@ import { ForbiddenComponent } from './pages/forbidden/forbidden.component';
     NgxPaginationModule
   ],
   providers: [
-    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}
+    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: GestErrorInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: NetworkInterceptor, multi: true}
   ],
   bootstrap: [AppComponent]
 })

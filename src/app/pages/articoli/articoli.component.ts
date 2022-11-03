@@ -3,6 +3,7 @@ import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { map, Observable, Observer, of, OperatorFunction } from 'rxjs';
 import { ResponseResult } from 'src/app/models/response-result';
 import { ArticoliService } from 'src/services/data/articoli.service';
+import { JwtRolesService } from 'src/services/jwt-roles.service';
 import { IArticoli } from '../../models/Articoli';
 
 @Component({
@@ -29,7 +30,12 @@ export class ArticoliComponent implements OnInit {
   // -------------------------
 
 
-  constructor(private articoliSvc: ArticoliService, private route: ActivatedRoute, private router: Router) {}
+  constructor(
+              private articoliSvc: ArticoliService,
+              private route: ActivatedRoute,
+              private router: Router,
+              private jwtRolesSvc: JwtRolesService
+              ) {}
 
   ngOnInit(): void {
     this.filter$ = this.route.queryParamMap.pipe(
@@ -88,7 +94,8 @@ export class ArticoliComponent implements OnInit {
         this.getArticoli(this.filter);
     } else {
       console.error(err);
-      this.articoliErr = err.error.message;
+      //this.articoliErr = err.error.message;
+      this.articoliErr = err.message;
       this.filterType = 0;
     }
   }
@@ -103,15 +110,16 @@ export class ArticoliComponent implements OnInit {
   }
 
   handleDelOk = (resp: ResponseResult, codArticolo: string) : void => {
-    console.log(resp);
+    //console.log(resp);
     if(resp.code === '0') {
       this.articoli$ = this.articoli$.filter(item => item.codArt !== codArticolo);
     }
   }
 
   handleDelKo = (err: any) : void => {
-    console.log(err);
-    this.articoliErr = err.error.message;
+    //console.log(err);
+    //this.articoliErr = err.error.message;
+    this.articoliErr = err.message;
   }
 
   modifica = (codArt : string) : void => {
@@ -125,6 +133,7 @@ export class ArticoliComponent implements OnInit {
     this.router.navigate(['gestart']);
   }
 
+  isEliminaButtonToShow = () : boolean => this.jwtRolesSvc.isUserAdmin()
 
 } // class end
 

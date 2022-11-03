@@ -55,21 +55,24 @@ export class GestartComponent implements OnInit {
 
   handleResponse = (response: IArticoli) => {
     console.log(`Articolo ${response.codArt} trovato`);
-    console.log(response);
+    //console.log(response);
     this.articolo = response;
   }
 
   handleError = (err: any) => {
     console.error(err);
+    /*
     if(Array.isArray(err.error)) {
       this.respOp = err.error[0];
     } else {
       this.respOp = err.error;
     }
+    */
+    this.respOp = err;
   }
 
   handleResponseOp = (r: ResponseResult) => {
-    console.log(r);
+    //console.log(r);
     this.respOp = r;
   }
 

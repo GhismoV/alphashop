@@ -33,8 +33,9 @@ export class LoginComponent implements OnInit {
       },
       error: (err) => {
         this.autenticato = false
-        if(err.error.message) {
-          this.errMsg = err.error.message
+        if(err.message || err.error.message) {
+          //this.errMsg = err.error.message
+          this.errMsg = err.message
         }
       },
       complete: () => console.log("Autenticazione " + this.autenticato ? "OK" : "non avvenuta")

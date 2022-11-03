@@ -35,7 +35,8 @@ export class WelcomeComponent implements OnInit {
   }
 
   handleError = (err : any) : void => {
-    this.apiRsErr = err.error.message + '[' + err.error.error + ']';
+    //this.apiRsErr = err.error.message + '[' + err.error.error + ']';
+    this.apiRsErr = err.message + '[' + err.error + ']';
   }
 
 }
