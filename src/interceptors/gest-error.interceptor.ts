@@ -17,7 +17,7 @@ export class GestErrorInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(request).pipe(
       catchError( err => {
-        console.log("ghismo tmp interceptor errori: " + JSON.stringify(err))
+        //console.log("ghismo tmp interceptor errori: " + JSON.stringify(err))
 
         let respOp : ResponseResult
         if(Array.isArray(err.error)) {
